@@ -45,3 +45,6 @@ consul的使用说明请参考官方镜像的使用说明，这里只是将docke
 * 强烈建议windows用户仔细看看【[windows用户填坑建议](windows用户填坑建议.md)】，Windows下有一些问题，需要自行解决一下的。
 
 * 其他有关docker基本概念和命令操作，请参考【[docker基础概念和命令操作](docker基础概念和命令操作.md)】。
+
+* CentOS7 的docker安装脚本
+本人常用服务器是CentOS的，其他的不熟，所以脚本基本上都是在CentOS上面跑的，[dockerinstall.sh](https://github.com/bluesky4485/linuxshell/blob/master/dockerinstall.sh)针对新部署的服务器来说，安装命令是没问题的，除docker外，还安装了git、nginx、tmux常用软件
