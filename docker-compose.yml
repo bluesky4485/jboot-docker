@@ -1,0 +1,47 @@
+version: '2'
+services:
+
+  # 公共镜像，只配置了国内镜像加速和中国时区配置
+  alpine:
+    build: alpine
+    image: kolehank/alpine
+
+  # 如果不需要远程调用的话，可以将consul节点整个注释掉
+  consul:
+    build: consul
+    image: kolehank/consul
+    depends_on:
+      - "alpine"
+    ports:
+      - "8500:8500"
+    volumes:
+     - "./volumes/consul/data:/consul/data"
+    restart: always
+
+  # Jboot 缓存等需要
+  redis:
+    build: redis
+    image: kolehank/redis
+    depends_on:
+      - "alpine"
+    ports:
+      - "6379:6379"
+    restart: always
+
+  # 数据库相关配置
+  mysql:
+    build: mysql
+    image: kolehank/mysql
+    depends_on:
+      - "alpine"
+    volumes:
+      - "./volumes/mysql:/apps/mysql"
+    ports:
+      - "3306:3306"
+    environment:
+      # 默认的root密码和需要新建的数据库、用户名、密码，若需要删除或重建数据库，需要删除volumes/mysql/下面的全部内容，然后重新build
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=your_db_name
+      - MYSQL_USER=developer
+      - MYSQL_PASSWORD=developer
+    restart: always
